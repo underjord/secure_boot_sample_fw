@@ -52,25 +52,30 @@ config :vintage_net,
   regulatory_domain: "00",
   config: [
     {"usb0", %{type: VintageNetDirect}},
-    {"eth0",
-     %{
-       type: VintageNetEthernet,
-       ipv4: %{method: :dhcp},
-       vintage_net_ethernet: %{
-        wpa_supplicant_conf: """
-        network={
-          key_mgmt=IEEE8021X
-          pairwise=CCMP
-          identity="myuser"
-          password="mypass"
-          eap=PEAP
-          eapol_flags=0
-          phase2="auth=MSCHAPV2"
-        }
-        """
-       }
-     }},
-    {"wlan0", %{type: VintageNetWiFi}}
+    # {"eth0",
+    #  %{
+    #    type: VintageNetEthernet,
+    #    ipv4: %{method: :dhcp},
+    #    vintage_net_ethernet: %{
+    #     wpa_supplicant_conf: """
+    #     network={
+    #       key_mgmt=IEEE8021X
+    #       pairwise=CCMP
+    #       identity="myuser"
+    #       password="mypass"
+    #       eap=PEAP
+    #       eapol_flags=0
+    #       phase2="auth=MSCHAPV2"
+    #     }
+    #     """
+    #    }
+    #  }},
+    {"wlan0", %{
+      type: VintageNetWiFi,
+      ipv4: %{method: :dhcp},
+      vintage_net_wifi: %{key_mgmt: :wpa_psk, ssid: "Kontoret", psk: "underjord"}
+      }
+    }
   ]
 
 config :mdns_lite,

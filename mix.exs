@@ -35,7 +35,7 @@ defmodule SecFw.MixProject do
   def application do
     [
       mod: {SecFw.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :public_key, :crypto]
     ]
   end
 
@@ -60,15 +60,21 @@ defmodule SecFw.MixProject do
       # bumps to Nerves systems. Since these include Linux kernel and Erlang
       # version updates, please review their release notes in case
       # changes to your application are needed.
-      #{:nerves_system_rpi4, "> 0.0.0", runtime: false, targets: :rpi4},
+      {:nerves_system_rpi3a, "> 0.0.0", runtime: false, targets: :rpi3a},
+      {:nerves_system_rpi3, "> 0.0.0", runtime: false, targets: :rpi3},
+      {:nerves_system_rpi4, "> 0.0.0", runtime: false, targets: :rpi4},
       #{:nerves_system_rpi4, github: "nerves-project/nerves_system_rpi4", runtime: false, targets: :rpi4},
       #{:secure_boot_rpi4, path: "../secure_boot_rpi4", runtime: false, targets: :rpi4, nerves: [compile: true]},
-      {:secure_outer_rpi4, path: "../secure_outer_rpi4", runtime: false, targets: :secure_cm4, nerves: [compile: true]},
+      #{:secure_outer_rpi4, path: "../secure_outer_rpi4", runtime: false, targets: :secure_cm4, nerves: [compile: true]},
 
-      {:vintage_net, github: "underjord/vintage_net", override: true},
-      {:vintage_net_wifi, github: "underjord/vintage_net_wifi", branch: "supplicant", override: true},
-      {:vintage_net_ethernet, github: "underjord/vintage_net_ethernet", branch: "supplicant", override: true},
-      {:vintage_net_supplicant, github: "underjord/vintage_net_supplicant", override: true},
+      #{:vintage_net, github: "underjord/vintage_net", override: true},
+      {:vintage_net, path: "../vintage_net", override: true},
+      #{:vintage_net_wifi, github: "underjord/vintage_net_wifi", override: true},
+      {:vintage_net_wifi, path: "../vintage_net_wifi", override: true},
+      #{:vintage_net_ethernet, github: "underjord/vintage_net_ethernet", branch: "supplicant", override: true},
+      {:vintage_net_ethernet, path: "../vintage_net_ethernet", override: true},
+      #{:vintage_net_supplicant, github: "underjord/vintage_net_supplicant", override: true},
+      {:vintage_net_supplicant, path: "../vintage_net_supplicant", override: true},
 
       {:nerves_key, "~> 1.2"}
     ]
